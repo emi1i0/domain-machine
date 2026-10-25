@@ -21,7 +21,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-UA = "domain-machine/0.1.0 (brand name availability research tool)"
+UA = "domain-machine/0.1.1 (brand name availability research tool)"
 
 AUTO = {
     "github": "https://api.github.com/users/{name}",

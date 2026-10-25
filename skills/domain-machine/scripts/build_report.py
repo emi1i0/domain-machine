@@ -462,6 +462,7 @@ def main():
     ap.add_argument("--analysis", required=True)
     ap.add_argument("--html", help="output HTML path (default: report.html next to analysis)")
     ap.add_argument("--md", help="output Markdown path (default: report.md next to analysis)")
+    ap.add_argument("--open", action="store_true", help="open the HTML report in the default browser")
     args = ap.parse_args()
     a, results, handles, checked_at = load(args.analysis)
     page, md = build(a, results, handles, checked_at)
@@ -470,7 +471,43 @@ def main():
     mp = Path(args.md) if args.md else base / "report.md"
     hp.write_text(page, encoding="utf-8")
     mp.write_text(md, encoding="utf-8")
+    if base.resolve().parent.name == "domain-research":
+        ensure_gitignore(base.resolve().parent)
     print(f"html: {hp.resolve()}\nmd:   {mp.resolve()}")
+    if args.open:
+        opened, why = open_in_browser(hp)
+        print(f"opened: {str(opened).lower()}" + (f" ({why})" if why else ""))
+
+
+GITIGNORE = """\
+# Created by domain-machine: only the final report.md of each run is versioned.
+# Working files (names lists, JSON results, analysis, report.html) stay local.
+*
+!.gitignore
+!*/
+!*/report.md
+"""
+
+
+def ensure_gitignore(root):
+    """Same as init_workspace.py: never overwrites an existing file."""
+    gi = Path(root) / ".gitignore"
+    if not gi.exists():
+        gi.write_text(GITIGNORE, encoding="utf-8")
+
+
+def open_in_browser(path):
+    """Returns (opened, reason). Doesn't try where no local display exists."""
+    import os
+    import webbrowser
+    if os.environ.get("SSH_CONNECTION") or os.environ.get("SSH_TTY"):
+        return False, "remote SSH session"
+    if sys.platform.startswith("linux") and not (os.environ.get("DISPLAY") or os.environ.get("WAYLAND_DISPLAY")):
+        return False, "no graphical display"
+    try:
+        return bool(webbrowser.open(Path(path).resolve().as_uri())), None
+    except Exception as e:
+        return False, str(e)
 
 
 if __name__ == "__main__":

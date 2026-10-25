@@ -1,6 +1,6 @@
 {
   "name": "domain-machine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Brainstorms brandable names for your project, bulk-checks real domain availability via registry RDAP/WHOIS, researches conflicts and delivers a ranked HTML + Markdown report.",
   "author": {
     "name": "emi1i0"

@@ -35,7 +35,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 UA = f"domain-machine/{VERSION} (domain availability research tool)"
 CACHE_DIR = Path(os.environ.get("DOMAIN_MACHINE_CACHE", Path.home() / ".cache" / "domain-machine"))
 CONFIG_FILE = Path(os.environ.get("DOMAIN_MACHINE_CONFIG", Path.home() / ".config" / "domain-machine" / "config.json"))

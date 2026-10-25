@@ -28,8 +28,17 @@ Find a Python 3 interpreter: try `python3 --version`, then `python --version`, t
 `SKILL_DIR` is the directory of this file. If no Python is available, tell the user and stop:
 web search alone can't verify availability.
 
-Work folder: `./domain-research/<project-slug>/` in the current directory, unless the user picks
-another place. Put every intermediate file there (names lists, JSON results, analysis, report).
+Create the work folder before anything else:
+
+```bash
+$PY "$SKILL_DIR/scripts/init_workspace.py" --slug "<project name>"
+```
+
+It creates `./domain-research/<slug>/` and a `domain-research/.gitignore` that ignores everything
+except each run's `report.md`. The project's own `.gitignore` is never touched, and an existing
+`domain-research/.gitignore` is left alone. Put every intermediate file in the printed `workdir`
+(names lists, JSON results, analysis). Only `report.md` ends up versioned, as the record of the decision.
+If the user wants another location, pass `--root <folder>`.
 
 ## 1. Brief
 
@@ -137,16 +146,22 @@ availability files, handles file, all scored candidates, ordered shortlist, reco
 next steps, sources). Then render it:
 
 ```bash
-$PY "$SKILL_DIR/scripts/build_report.py" --analysis domain-research/<slug>/analysis.json
+$PY "$SKILL_DIR/scripts/build_report.py" --analysis domain-research/<slug>/analysis.json --open
 ```
 
 This writes `report.html` (cards, a sortable and filterable matrix, light/dark themes) and
-`report.md`. If the host can preview or publish HTML (for example an Artifact tool), offer it.
+`report.md`, then opens the HTML in the user's default browser. Always pass `--open`: the user
+shouldn't have to figure out how to open an HTML file.
+- `opened: true` → tell them it's open in their browser.
+- `opened: false` (remote/SSH session, cloud sandbox, no display) → give the **full absolute path**
+  of `report.html` and say how to open it locally (double-click it, or drag it into a browser). If the
+  host can preview or publish HTML (for example an Artifact tool), offer that instead.
 
 In chat, give a tight summary instead of the full report:
 - the top 3–5 domains, each with a one-line reason and price;
 - the recommendation in 2–3 sentences;
-- the full paths to both report files;
+- where the reports are: the HTML that was opened in the browser, and the `report.md` that is the
+  only file meant for version control (the working files are git-ignored);
 - a reminder that availability changes, so they should register the winner soon (multi-year if
   the renewal price is stable).
 

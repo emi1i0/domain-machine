@@ -51,7 +51,10 @@ You choose the depth each time:
 | standard | ~120 | 8–12 | conflicts, light trademark, handles | 8–10 |
 | deep | 200–350, several rounds | 12–20 | full conflicts, trademarks per market, handles, meanings, aftermarket, premium check | 12–15 |
 
-Reports are saved to `./domain-research/<project>/report.html` and `report.md`.
+When it finishes, the **HTML report opens in your browser** automatically. Everything lives in
+`./domain-research/<project>/`, and the skill adds a `.gitignore` inside `domain-research/` so that
+**only `report.md` gets versioned**. The working files (name lists, JSON results, the HTML) stay local,
+and your project's own `.gitignore` is never touched.
 
 ## Optional: Porkbun API keys
 
@@ -101,7 +104,7 @@ not legal advice.
 .claude-plugin/        plugin.json + marketplace.json
 skills/domain-machine/
   SKILL.md             the workflow the agent follows
-  scripts/             check_domains.py · check_handles.py · build_report.py
+  scripts/             init_workspace.py · check_domains.py · check_handles.py · build_report.py
   references/          naming strategies · TLD guide · scoring rubric · research playbook · report schema · Porkbun setup
 ```
 
