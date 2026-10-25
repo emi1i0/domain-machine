@@ -1,0 +1,11 @@
+{
+  "name": "domain-machine",
+  "owner": { "name": "emi1i0" },
+  "plugins": [
+    {
+      "name": "domain-machine",
+      "source": "./",
+      "description": "Find, verify and rank domain names for any project."
+    }
+  ]
+}

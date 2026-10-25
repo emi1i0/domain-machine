@@ -1,0 +1,20 @@
+{
+  "name": "domain-machine",
+  "version": "0.1.0",
+  "description": "Brainstorms brandable names for your project, bulk-checks real domain availability via registry RDAP/WHOIS, researches conflicts and delivers a ranked HTML + Markdown report.",
+  "author": {
+    "name": "emi1i0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "domains",
+    "naming",
+    "branding",
+    "startup",
+    "rdap",
+    "whois",
+    "research"
+  ],
+  "homepage": "https://github.com/emi1i0/domain-machine",
+  "repository": "https://github.com/emi1i0/domain-machine"
+}
